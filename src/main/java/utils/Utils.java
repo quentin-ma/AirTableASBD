@@ -137,7 +137,13 @@ public class Utils<T> {
 		}
 		return array;
 	}
-
+	
+	public static String filePathProperties(String filename) {
+		return System.getProperty("user.dir")
+				.concat("/src/main/resources/")
+				.concat(filename);
+	}
+	
 	public String filePath(String filename, Class<T> o) {
 		return System.getProperty("user.dir")
 				.concat("/src/main/resources/" + o.getSimpleName() + "/")

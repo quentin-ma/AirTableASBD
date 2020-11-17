@@ -1,23 +1,26 @@
 package utils;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import dto.R;
 import dto.RS;
 import dto.S;
+import exceptions.MyException;
+import exceptions.MyException.ClassDoesNotExistException;
 import join.Constants;
 
 public class AirTable {
-	
-	public static final String KEY = "keyDM0og9WhJ16ZN5";
-	public static final String URL = "https://api.airtable.com/v0/appUQ8AkhUVcQAdHp/";
+
+	public AirTable()  {}
 	
 	public void generateDescriptor(Class<?> o) {
 		int bufferSize = 0;
@@ -51,7 +54,7 @@ public class AirTable {
 		}
 	}
 	
-	public void createTables(Class<?> o, int[] array) throws IOException, InterruptedException {
+	public void createTables(Class<?> o, int[] array) throws IOException, InterruptedException, ClassDoesNotExistException {
 		int row = 0, idx_block = 0, cpt = 0;
 		int block_size = 10;
 		String body = "";
@@ -67,9 +70,8 @@ public class AirTable {
 			} else if (o.equals(S.class)) {
 				body = createRecord(Descriptor.getSd()[cpt], bloc);
 				sendRequest(Descriptor.getSd()[cpt], body);
-			} else if (o.equals(RS.class)) {
-				body = createRecord(Descriptor.getRsd()[cpt], bloc);
-				sendRequest(Descriptor.getRsd()[cpt], body);
+			} else {
+				throw new MyException.ClassDoesNotExistException("Provided class is not implemented yet.");
 			}
 			cpt++;
 			idx_block++;
@@ -79,10 +81,14 @@ public class AirTable {
 	}
 	
 	private String sendRequest(int asc_id, String body) throws IOException, InterruptedException {
+		FileReader file = new FileReader(Utils.filePathProperties("application.properties"));
+		Properties properties = new Properties();
+		properties.load(file);
+		System.out.println("in send request : " + properties.getProperty("api_url"));
 		HttpClient client = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create(URL + asc_id))
-				.header("Authorization", "Bearer " + KEY)
+				.uri(URI.create(properties.getProperty("api_url") + asc_id))
+				.header("Authorization", "Bearer " + properties.getProperty("api_key"))
 				.header("Content-type", "application/json")
 				.POST(HttpRequest.BodyPublishers.ofString(body))
 				.build();
@@ -110,7 +116,7 @@ public class AirTable {
 		return sb.toString();
 	}
 	
-	public int[] selectBlock(int descriptor) {
+	public int[] selectBlock(int descriptor) throws IOException {
 		String jsonResponse = selectRecords(descriptor);
 		return parser(jsonResponse, descriptor);
 	}
@@ -138,11 +144,15 @@ public class AirTable {
 		return r;
 	}
 	
-	private String selectRecords(int descriptor) {
+	private String selectRecords(int descriptor) throws IOException {
+		FileReader file = new FileReader(Utils.filePathProperties("application.properties"));
+		Properties properties = new Properties();
+		properties.load(file);
+		System.out.println("in send request : " + properties.getProperty("api_url"));
 		HttpClient client = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder()
-				.uri(URI.create(URL + descriptor))
-				.header("Authorization", "Bearer " + KEY)
+				.uri(URI.create(properties.getProperty("api_url") + descriptor))
+				.header("Authorization", "Bearer " + properties.getProperty("api_key"))
 				.build();
 		return client
 				.sendAsync(request, BodyHandlers.ofString())

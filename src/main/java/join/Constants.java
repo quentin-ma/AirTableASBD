@@ -2,8 +2,6 @@ package join;
 
 public final class Constants {
 	
-	private Constants() {}
-	
 	public static final int R_SIZE = 10;
 	public static final int S_SIZE = 10;
 	public static final int RS_SIZE = 10;

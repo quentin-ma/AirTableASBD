@@ -11,8 +11,8 @@ public class Pair implements IPair {
 	
 	private AirTable airtable;
 	
-	public Pair() {
-		airtable = new AirTable();
+	public Pair() throws IOException {
+		this.airtable = new AirTable();
 	}
 
 	@Override
