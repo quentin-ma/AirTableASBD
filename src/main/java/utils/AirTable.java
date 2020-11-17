@@ -13,20 +13,11 @@ import dto.R;
 import dto.RS;
 import dto.S;
 import join.Constants;
-import join.Segmentator;
 
 public class AirTable {
 	
 	public static final String KEY = "keyDM0og9WhJ16ZN5";
 	public static final String URL = "https://api.airtable.com/v0/appUQ8AkhUVcQAdHp/";
-
-	private StringBuilder sb;
-	private Segmentator segmentator;
-	private Descriptor descriptor;
-	
-	public AirTable() {
-		sb = new StringBuilder();
-	}
 	
 	public void generateDescriptor(Class<?> o) {
 		int bufferSize = 0;
@@ -49,6 +40,14 @@ public class AirTable {
 			Descriptor.setSd(td);
 		} else if (o.equals(RS.class)) {
 			Descriptor.setRsd(td);
+		}
+	}
+	
+	public void createRSBlock(Class<?> o, int[] array, int descriptor) throws IOException, InterruptedException {
+		if (o.equals(RS.class)) {
+			String body = createRecord(descriptor, array);
+			String responseBody = sendRequest(descriptor, body);
+			System.out.println(responseBody);
 		}
 	}
 	

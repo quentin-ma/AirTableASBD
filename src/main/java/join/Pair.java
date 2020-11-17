@@ -75,7 +75,7 @@ public class Pair implements IPair {
 	
 	@Override
 	public void externalNestedLoopJoin() throws IOException, InterruptedException {
-		int r_block = 0, s_block = 0;
+		int r_block = 0, s_block = 0, rs_block = 0;
 		int idx = 0, k = 0;
 		int[] rs_tmp = new int[Constants.BLOCK_SIZE];
 		while (r_block < Descriptor.getRd().length) {
@@ -89,12 +89,13 @@ public class Pair implements IPair {
 				rs = nestedLoopJoin(r, s);
 				idx = 0;
 				while (idx < rs.length) {
-					if (r_block + 1 == Descriptor.getRd().length && s_block + 1 == Descriptor.getSd().length) {
-						airtable.createTables(RS.class, rs_tmp);
+					if ((r_block + 1 == Descriptor.getRd().length) && (s_block + 1 == Descriptor.getSd().length)) {
+						airtable.createRSBlock(RS.class, rs_tmp, Descriptor.getRsd()[rs_block]);
 						System.out.println(Arrays.toString(rs_tmp));
 					}
 					if (k == Constants.BLOCK_SIZE) {
-						airtable.createTables(RS.class, rs_tmp);
+						airtable.createRSBlock(RS.class, rs_tmp, Descriptor.getRsd()[rs_block]);
+						rs_block++;
 						System.out.println(Arrays.toString(rs_tmp));
 						rs_tmp = new int[Constants.BLOCK_SIZE];
 						k = 0;
