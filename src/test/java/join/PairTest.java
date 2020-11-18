@@ -23,21 +23,10 @@ public class PairTest {
 	public void init() {
 		
 	}
-
+	
 	@Test
-	public void generate() throws IOException {
-		Segmentator segmentator = new Segmentator(96, 46);
+	public void externalNestedLoopJoinTest() {
 		
-		List<String> list = Utils.generate(segmentator.getrBlocks());
-		Utils<dto.R> utils_r = new Utils<dto.R>();
-		int[] array_r = utils_r.toASCII(list, R.class);
-		utils_r.segmentData(array_r, R.class);
-
-		List<String> list2 = Utils.generate(segmentator.getsBlocks());
-		Utils<dto.S> utils_s = new Utils<dto.S>();
-		int[] array_s = utils_s.toASCII(list2, S.class);
-		utils_s.segmentData(array_s, S.class);
-
 	}
 
 }

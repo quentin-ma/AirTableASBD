@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import dto.R;
 import dto.RS;
 import dto.S;
-import join.Pair;
+import join.Join;
 
 class AirTableTest {
 
@@ -20,7 +20,7 @@ class AirTableTest {
 		Utils<S> utils_s = new Utils<>();
 		int[] asc_s = utils_s.generateASCII(S.class);
 		
-		AirTable airtable = new AirTable();
+		Disk airtable = new Disk();
 		airtable.generateDescriptor(R.class);
 		airtable.generateDescriptor(S.class);
 		airtable.generateDescriptor(RS.class);
@@ -28,7 +28,7 @@ class AirTableTest {
 //		airtable.createTables(R.class, asc_r);
 //		airtable.createTables(S.class, asc_s);
 		
-		Pair pair = new Pair();
+		Join pair = new Join();
 		pair.externalNestedLoopJoin();
 
 	}

@@ -1,3 +1,21 @@
+/**
+ * TP n°4
+ * 
+ * Titre du TP : Block Nested Loop Airtable
+ *
+ * Date : 17 novembre 2020
+ * 
+ * Nom  : MA
+ * Prenom : Quentin
+ *
+ * email : quentin.ma@etu.u-paris.fr
+ * 
+ * Remarques : Cette classe expose les descripteurs principaux de notre programme.
+ * Chaque descripteur identifie les blocs disques.
+ * RD(R)
+ * RS(S)
+ * RSD(RS)
+ */
 package utils;
 
 public class Descriptor {
@@ -7,9 +25,9 @@ public class Descriptor {
 	public static int[] rsd;
 	
 	public Descriptor() {
-		rd = new int[10];
-		sd = new int[10];
-		rsd = new int[10];
+		rd = new int[Constants.BUFFER_SIZE];
+		sd = new int[Constants.BUFFER_SIZE];
+		rsd = new int[Constants.BUFFER_SIZE];
 	}
 
 	/**

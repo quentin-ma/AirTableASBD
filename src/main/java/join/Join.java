@@ -1,18 +1,33 @@
+/**
+ * TP n°4
+ * 
+ * Titre du TP : Block Nested Loop Airtable
+ *
+ * Date : 17 novembre 2020
+ * 
+ * Nom  : MA
+ * Prenom : Quentin
+ *
+ * email : quentin.ma@etu.u-paris.fr
+ * 
+ * Remarques : Implémentation des fonctions de jointure.
+ */
 package join;
 
 import java.io.IOException;
 import java.util.Arrays;
 
 import dto.RS;
-import utils.AirTable;
+import utils.Block;
+import utils.Constants;
 import utils.Descriptor;
 
-public class Pair implements IPair {
+public class Join implements IJoin {
+
+	private Block block;
 	
-	private AirTable airtable;
-	
-	public Pair() throws IOException {
-		this.airtable = new AirTable();
+	public Join() throws IOException {
+		this.block = new Block();
 	}
 
 	@Override
@@ -80,21 +95,22 @@ public class Pair implements IPair {
 		int[] rs_tmp = new int[Constants.BLOCK_SIZE];
 		while (r_block < Descriptor.getRd().length) {
 			int[] r = new int[Constants.BLOCK_SIZE];
-			r = airtable.selectBlock(Descriptor.getRd()[r_block]);
+			r = block.selectBlock(Descriptor.getRd()[r_block]);
 			s_block = 0;
 			while (s_block < Descriptor.getSd().length) {
 				int[] s = new int[Constants.BLOCK_SIZE];
-				s = airtable.selectBlock(Descriptor.getSd()[s_block]);
+				s = block.selectBlock(Descriptor.getSd()[s_block]);
 				int[] rs = new int[Constants.BLOCK_SIZE];
 				rs = nestedLoopJoin(r, s);
 				idx = 0;
 				while (idx < rs.length) {
 					if ((r_block + 1 == Descriptor.getRd().length) && (s_block + 1 == Descriptor.getSd().length)) {
-						airtable.createRSBlock(RS.class, rs_tmp, Descriptor.getRsd()[rs_block]);
+						block.createRSBlock(RS.class, rs_tmp, Descriptor.getRsd()[rs_block]);
 						System.out.println(Arrays.toString(rs_tmp));
+						break;
 					}
 					if (k == Constants.BLOCK_SIZE) {
-						airtable.createRSBlock(RS.class, rs_tmp, Descriptor.getRsd()[rs_block]);
+						block.createRSBlock(RS.class, rs_tmp, Descriptor.getRsd()[rs_block]);
 						rs_block++;
 						System.out.println(Arrays.toString(rs_tmp));
 						rs_tmp = new int[Constants.BLOCK_SIZE];

@@ -1,3 +1,20 @@
+/**
+ * TP n°4
+ * 
+ * Titre du TP : Block Nested Loop Airtable
+ *
+ * Date : 17 novembre 2020
+ * 
+ * Nom  : MA
+ * Prenom : Quentin
+ *
+ * email : quentin.ma@etu.u-paris.fr
+ * 
+ * Remarques : Cette classe sert à représenter les objets que l'on transfert.
+ * Elle suit le pattern DTO pour Data Transfer Object.
+ * Ce pattern est très commode lorsqu'il s'agit de contruire des objets robustes 
+ * afin d'effectuer un "mapping" des données.
+ */
 package dto;
 
 import java.util.ArrayList;

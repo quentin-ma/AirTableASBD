@@ -1,3 +1,19 @@
+/**
+ * TP n°4
+ * 
+ * Titre du TP : Block Nested Loop Airtable
+ *
+ * Date : 17 novembre 2020
+ * 
+ * Nom  : MA
+ * Prenom : Quentin
+ *
+ * email : quentin.ma@etu.u-paris.fr
+ * 
+ * Remarques : Cette classe fournit l'ensemble des méthodes dites "utiles" notre programme.
+ * Ce sont des méthodes outils qui se complètent à notre programme, car elles ne font pas corps
+ * avec la logique intrinsèque du programme.
+ */
 package utils;
 
 import java.io.BufferedReader;
@@ -13,7 +29,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import dto.R;
-import join.Constants;
 
 public class Utils<T> {
 	
@@ -117,7 +132,6 @@ public class Utils<T> {
 			max += MAX_ELEMENT;
 			i++;
 		}
-		
 	}
 
 	public int[] readMemory(String filename, Class<T> o) {
