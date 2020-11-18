@@ -18,7 +18,7 @@
  */
 package utils;
 
-public class Descriptor {
+public final class Descriptor {
 
 	public static int[] rd;
 	public static int[] sd;

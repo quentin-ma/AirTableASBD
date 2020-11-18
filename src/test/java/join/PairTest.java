@@ -11,13 +11,13 @@ import org.junit.jupiter.api.Test;
 
 import dto.R;
 import dto.S;
+import utils.Disk;
 import utils.Utils;
 
 public class PairTest {
 	
-//	public static final char[] R = {'A', 'Z', 'G', 'J', 'U', 'K', 'E', 'B', 'V', 'D'};
-//	public static final char[] S = {'B', 'U', 'Z', 'K', 'X', 'V', 'N', 'L', 'M', 'E'};
-//	public static final char[] RS = {'Z', 'U', 'K', 'E', 'B', 'V'};
+	public static final int[] RB = {7227,6320,4233,1563,5220,6330};
+	public static final int[] SB = {7227,1552,3221,1563};
 	
 	@Before
 	public void init() {
@@ -26,7 +26,8 @@ public class PairTest {
 	
 	@Test
 	public void externalNestedLoopJoinTest() {
-		
+		Disk disk = new Disk();
+		disk.generateDescriptor();
 	}
 
 }
