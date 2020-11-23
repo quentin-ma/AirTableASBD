@@ -15,7 +15,7 @@
  * mais aussi la réception des données à travers une requête GET.
  * Le parser et le StringBuilder sont inhérents aux méthodes de sélections et de créations.
  */
-package utils;
+package models;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -29,6 +29,7 @@ import java.util.Properties;
 import dto.R;
 import dto.RS;
 import dto.S;
+import utils.Utils;
 
 public class Disk implements IDisk {
 

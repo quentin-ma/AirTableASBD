@@ -14,7 +14,7 @@
  * C'est ici où les évolutions sont gérées uniquement par le changement des valeurs des constantes.
  * Par exemple: on peut changer la valeur de la taille des "blocs" pour R_SIZE d e10 à 20, etc...
  */
-package utils;
+package models;
 
 public final class Constants {
 	
@@ -28,5 +28,5 @@ public final class Constants {
 	
 	public static final int BLOCK_SIZE = 10;
 	public static final int BUFFER_SIZE = 10;
-
+	
 }

@@ -16,7 +16,7 @@
  * RS(S)
  * RSD(RS)
  */
-package utils;
+package models;
 
 public final class Descriptor {
 

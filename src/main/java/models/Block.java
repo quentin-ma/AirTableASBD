@@ -1,4 +1,18 @@
-package utils;
+/**
+ * TP n°4
+ * 
+ * Titre du TP : Block Nested Loop Airtable
+ *
+ * Date : 17 novembre 2020
+ * 
+ * Nom  : MA
+ * Prenom : Quentin
+ *
+ * email : quentin.ma@etu.u-paris.fr
+ * 
+ * Remarques :  Cette classe concerne la gestion des blocs sur disque.
+ */
+package models;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -9,6 +23,7 @@ import dto.RS;
 import dto.S;
 import exceptions.MyException;
 import exceptions.MyException.ClassDoesNotExistException;
+import utils.Utils;
 
 public class Block {
 	
@@ -46,11 +61,13 @@ public class Block {
 		return r;
 	}
 	
-	public void createRSBlock(Class<?> o, int[] array, int descriptor) throws IOException, InterruptedException {
+	public void createRSBlock(Class<?> o, int[] array, int descriptor) throws IOException, InterruptedException, ClassDoesNotExistException {
 		if (o.equals(RS.class)) {
 			String body = createRecord(descriptor, array);
 			String responseBody = disk.write(descriptor, body);
 			System.out.println(responseBody);
+		} else {
+			throw new MyException.ClassDoesNotExistException("Provided class is not implemented yet.");
 		}
 	}
 	
@@ -59,16 +76,16 @@ public class Block {
 		int block_size = 10;
 		String body = "";
 		for (int i = 0; i < array.length && block_size >= 0; i += block_size) {
-			int[] bloc = new int[block_size];
+			int[] block = new int[block_size];
 			row = 0;
 			for (int j = i; j < i + block_size; j++) {
-				bloc[row++] = array[j];
+				block[row++] = array[j];
 			}
 			if (o.equals(R.class)) {
-				body = createRecord(Descriptor.getRd()[cpt], bloc);
+				body = createRecord(Descriptor.getRd()[cpt], block);
 				disk.write(Descriptor.getRd()[cpt], body);
 			} else if (o.equals(S.class)) {
-				body = createRecord(Descriptor.getSd()[cpt], bloc);
+				body = createRecord(Descriptor.getSd()[cpt], block);
 				disk.write(Descriptor.getSd()[cpt], body);
 			} else {
 				throw new MyException.ClassDoesNotExistException("Provided class is not implemented yet.");

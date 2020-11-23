@@ -18,9 +18,11 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import dto.RS;
-import utils.Block;
-import utils.Constants;
-import utils.Descriptor;
+import exceptions.MyException.ClassDoesNotExistException;
+import models.Block;
+import models.Constants;
+import models.Descriptor;
+import utils.Utils;
 
 public class Join implements IJoin {
 
@@ -89,31 +91,44 @@ public class Join implements IJoin {
 	}
 	
 	@Override
-	public void externalNestedLoopJoin() throws IOException, InterruptedException {
+	public void externalNestedLoopJoin() throws IOException, InterruptedException, ClassDoesNotExistException {
 		int r_block = 0, s_block = 0, rs_block = 0;
-		int idx = 0, k = 0;
-		int[] rs_tmp = new int[Constants.BLOCK_SIZE];
+		int idx = 0, idx_rsd = 0, k = 0;
+		int[] rsd = new int[Constants.BUFFER_SIZE];
+		int[] rs_tmp = new int[Constants.BUFFER_SIZE];
 		while (r_block < Descriptor.getRd().length) {
-			int[] r = new int[Constants.BLOCK_SIZE];
+			int[] r = new int[Constants.BUFFER_SIZE];
 			r = block.selectBlock(Descriptor.getRd()[r_block]);
 			s_block = 0;
 			while (s_block < Descriptor.getSd().length) {
-				int[] s = new int[Constants.BLOCK_SIZE];
+				int[] s = new int[Constants.BUFFER_SIZE];
 				s = block.selectBlock(Descriptor.getSd()[s_block]);
-				int[] rs = new int[Constants.BLOCK_SIZE];
+				int[] rs = new int[Constants.BUFFER_SIZE];
 				rs = nestedLoopJoin(r, s);
 				idx = 0;
 				while (idx < rs.length) {
+					if (idx_rsd == rsd.length) {
+						rsd = new int[Constants.BUFFER_SIZE];
+					}
 					if ((r_block + 1 == Descriptor.getRd().length) && (s_block + 1 == Descriptor.getSd().length)) {
+						String str_id = RS.class.getSimpleName() + String.format("%02d", idx_rsd);
+						int asc_id = Utils.encodeToASCII(str_id);
+						rsd[idx_rsd] = asc_id;
+						Descriptor.setRsd(rsd);
 						block.createRSBlock(RS.class, rs_tmp, Descriptor.getRsd()[rs_block]);
 						System.out.println(Arrays.toString(rs_tmp));
 						break;
 					}
 					if (k == Constants.BLOCK_SIZE) {
+						String str_id = RS.class.getSimpleName() + String.format("%02d", idx_rsd);
+						int asc_id = Utils.encodeToASCII(str_id);
+						rsd[idx_rsd] = asc_id;
+						Descriptor.setRsd(rsd);
 						block.createRSBlock(RS.class, rs_tmp, Descriptor.getRsd()[rs_block]);
 						rs_block++;
+						idx_rsd++;
 						System.out.println(Arrays.toString(rs_tmp));
-						rs_tmp = new int[Constants.BLOCK_SIZE];
+						rs_tmp = new int[Constants.BUFFER_SIZE];
 						k = 0;
 						break;
 					}

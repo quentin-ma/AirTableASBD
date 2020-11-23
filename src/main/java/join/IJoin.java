@@ -16,6 +16,8 @@ package join;
 
 import java.io.IOException;
 
+import exceptions.MyException.ClassDoesNotExistException;
+
 public interface IJoin {
 	
 	public char[] join(char[] r, char[] s);
@@ -23,6 +25,6 @@ public interface IJoin {
 	public char[] mergeJoinWithDuplicates(char[] r, char[] s);
 	public int[] nestedLoopJoin(int[] r, int[] s);
 	
-	public void externalNestedLoopJoin() throws IOException, InterruptedException;
+	public void externalNestedLoopJoin() throws IOException, InterruptedException, ClassDoesNotExistException;
 	
 }

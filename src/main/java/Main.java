@@ -14,13 +14,14 @@
  * Exécute la fonction principale du programme: effectuer une jointure sur blocs disques
  * représentés par les tables sur AirTable.
  */
-package join;
+
 
 import java.io.IOException;
 
 import dto.R;
 import dto.S;
 import exceptions.MyException.ClassDoesNotExistException;
+import join.Join;
 import models.Block;
 import models.Disk;
 import utils.Utils;
