@@ -1,3 +1,17 @@
+/**
+ * TP n°4
+ * 
+ * Titre du TP : Block Nested Loop Airtable
+ *
+ * Date : 17 novembre 2020
+ * 
+ * Nom  : MA
+ * Prenom : Quentin
+ *
+ * email : quentin.ma@etu.u-paris.fr
+ * 
+ * Remarques : Classe de tests des fonctions de jointures.
+ */
 package join;
 
 import java.io.IOException;
